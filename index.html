@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0F1729">
+<title>What Type of Prophet Are You?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0F1729;
+  --black-light: #141E35;
+  --black-card: #1A2340;
+  --black-elevated: #202C4A;
+  --black-border: #2A3758;
+  --gold: #E8C15C;
+  --gold-bright: #F2D079;
+  --gold-dim: #B8923D;
+  --gold-glow: rgba(232, 193, 92, 0.15);
+  --white: #F5F2EC;
+  --white-mid: rgba(245, 242, 236, 0.78);
+  --white-dim: rgba(245, 242, 236, 0.55);
+  --white-faint: rgba(245, 242, 236, 0.18);
+  --white-ghost: rgba(245, 242, 236, 0.08);
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html {
+  scroll-behavior: smooth;
+  background: #0F1729;
+  background-color: #0F1729;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  font-family: var(--sans);
+  background: var(--black);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 60vh;
+  background: radial-gradient(ellipse at center, var(--gold-glow) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 60px 32px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ─── INTRO SCREEN ─── */
+.screen { display: none; }
+.screen.active { display: block; animation: fadeIn 0.7s ease-out; }
+
+.intro {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.eyebrow::before, .eyebrow::after {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 28px;
+}
+h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.intro p.lead {
+  font-size: 1.05rem;
+  color: var(--white-mid);
+  max-width: 580px;
+  margin: 0 auto 20px;
+  line-height: 1.7;
+}
+
+.intro blockquote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--white-dim);
+  margin: 40px auto 44px;
+  max-width: 520px;
+  line-height: 1.6;
+  padding: 18px 32px;
+  border-left: 1px solid var(--gold);
+  border-right: 1px solid var(--gold);
+}
+.intro blockquote span {
+  display: block;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 14px;
+}
+
+.btn {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 18px 44px;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn:hover {
+  background: var(--gold-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -8px var(--gold-glow);
+}
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.btn.ghost {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--white-faint);
+}
+.btn.ghost:hover {
+  background: var(--white-ghost);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: none;
+}
+
+.intro .meta {
+  font-size: 0.72rem;
+  color: var(--white-dim);
+  margin-top: 24px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ─── QUIZ SCREEN ─── */
+.progress-wrap {
+  margin-bottom: 48px;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--white-dim);
+}
+.progress-meta .count { color: var(--gold); font-weight: 600; }
+.progress-bar {
+  height: 2px;
+  background: var(--white-faint);
+  position: relative;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-bright));
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.question-card {
+  animation: slideIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scripture-ref {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.question {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 3vw, 1.95rem);
+  font-weight: 400;
+  line-height: 1.3;
+  margin-bottom: 36px;
+  color: var(--white);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.option {
+  background: var(--black-card);
+  border: 1px solid var(--black-border);
+  padding: 22px 26px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: left;
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--white);
+  line-height: 1.55;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  width: 100%;
+}
+.option::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--white-faint);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+  transition: all 0.25s ease;
+}
+.option:hover {
+  border-color: var(--gold);
+  background: var(--black-elevated);
+  transform: translateX(4px);
+}
+.option:hover::before {
+  border-color: var(--gold);
+}
+.option.selected {
+  border-color: var(--gold);
+  background: var(--black-elevated);
+}
+.option.selected::before {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 3px var(--black-elevated);
+}
+
+/* Calibration (multi-select) styles */
+.calibration-subtitle {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  color: var(--white-dim);
+  margin-top: -24px;
+  margin-bottom: 28px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.calibration-options {
+  gap: 10px;
+}
+
+.calibration-option {
+  padding: 18px 22px;
+  font-size: 0.95rem;
+}
+
+/* Use square checkboxes for multi-select instead of circles */
+.calibration-option::before {
+  border-radius: 3px;
+  width: 16px;
+  height: 16px;
+}
+.calibration-option.selected::before {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8l3 3 7-7' stroke='%230F1729' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 14px 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 44px;
+  gap: 16px;
+}
+.btn-back {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white-dim);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 12px 0;
+  transition: color 0.2s;
+}
+.btn-back:hover { color: var(--gold); }
+.btn-back:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ─── RESULT SCREEN ─── */
+.result-header {
+  text-align: center;
+  margin-bottom: 56px;
+  padding-top: 12px;
+}
+
+.result-label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.result-label::before, .result-label::after {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+.result-hebrew {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(3rem, 8vw, 5rem);
+  line-height: 1;
+  margin-bottom: 14px;
+  color: var(--gold);
+  letter-spacing: -0.01em;
+}
+.result-translit {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.4rem, 3vw, 1.75rem);
+  color: var(--white-mid);
+  margin-bottom: 18px;
+}
+.result-role {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.result-section {
+  margin-bottom: 44px;
+  padding: 32px 0;
+  border-top: 1px solid var(--white-faint);
+}
+.result-section:first-of-type { border-top: none; padding-top: 0; }
+
+.section-heading {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-heading::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--gold);
+}
+
+.result-section p {
+  font-size: 1.02rem;
+  color: var(--white-mid);
+  line-height: 1.75;
+  margin-bottom: 18px;
+}
+.result-section p:last-child { margin-bottom: 0; }
+.result-section p strong {
+  color: var(--white);
+  font-weight: 500;
+}
+
+.scripture-card {
+  background: var(--black-card);
+  border-left: 2px solid var(--gold);
+  padding: 22px 26px;
+  margin: 18px 0;
+}
+.scripture-card .verse {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--white);
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+.scripture-card .ref {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.trait-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+@media (min-width: 560px) {
+  .trait-grid { grid-template-columns: 1fr 1fr; }
+}
+.trait {
+  background: var(--black-card);
+  padding: 14px 18px;
+  border: 1px solid var(--black-border);
+  font-size: 0.9rem;
+  color: var(--white-mid);
+  line-height: 1.5;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.trait::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  margin-top: 9px;
+  flex-shrink: 0;
+}
+
+/* Secondary type blend */
+.secondary-card {
+  background: linear-gradient(135deg, var(--black-card), var(--black-elevated));
+  border: 1px solid var(--white-faint);
+  padding: 28px 30px;
+  margin-top: 18px;
+}
+.secondary-card .sec-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--white-dim);
+  margin-bottom: 10px;
+}
+.secondary-card .sec-name {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.secondary-card .sec-name em {
+  font-style: italic;
+  color: var(--white-mid);
+  font-size: 0.95rem;
+  margin-left: 8px;
+}
+.secondary-card p {
+  margin-bottom: 0;
+  font-size: 0.96rem;
+  color: var(--white-mid);
+}
+
+/* Score breakdown */
+.score-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+.score-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 40px;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.88rem;
+}
+.score-row .label {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--white-mid);
+}
+.score-row .bar {
+  height: 4px;
+  background: var(--white-faint);
+  position: relative;
+  overflow: hidden;
+}
+.score-row .bar-fill {
+  position: absolute;
+  inset: 0;
+  right: auto;
+  background: var(--gold-dim);
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.score-row.top .bar-fill { background: linear-gradient(90deg, var(--gold-dim), var(--gold-bright)); }
+.score-row.second .bar-fill { background: linear-gradient(90deg, var(--gold-dim), var(--gold)); opacity: 0.75; }
+.score-row.second .label { color: var(--gold); opacity: 0.85; }
+.score-row .num {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--white-dim);
+  text-align: right;
+  letter-spacing: 0.1em;
+}
+.score-row.top .num { color: var(--gold); font-weight: 600; }
+
+.cta-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+.footer-note {
+  text-align: center;
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--white-faint);
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--white-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Mobile tightening */
+@media (max-width: 560px) {
+  .container { padding: 40px 20px 60px; }
+  .btn { padding: 16px 32px; font-size: 0.72rem; }
+  .option { padding: 18px 20px; font-size: 0.95rem; }
+  .scripture-card { padding: 18px 20px; }
+  .nav-row { flex-direction: column-reverse; align-items: stretch; }
+  .nav-row .btn-back { text-align: center; }
+  .score-row { grid-template-columns: 90px 1fr 36px; gap: 10px; font-size: 0.82rem; }
+}
+
+/* Share toast — shown when native share unavailable */
+.share-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: var(--black-elevated);
+  border: 1px solid var(--gold);
+  color: var(--white);
+  padding: 16px 24px;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--gold-glow);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10000;
+  max-width: calc(100vw - 40px);
+  text-align: center;
+  word-break: break-word;
+  pointer-events: none;
+}
+.share-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Btn feedback state during share */
+.btn.sharing {
+  background: var(--gold-bright);
+  color: var(--black);
+  cursor: default;
+  transform: none;
+  box-shadow: 0 0 0 1px var(--gold);
+}
+.btn.ghost.sharing {
+  background: var(--gold);
+  color: var(--black);
+  border-color: var(--gold);
+}
+</style>
+</head>
+<body style="background:#0F1729;background-color:#0F1729;color:#F5F2EC;">
+
+<div class="container">
+
+  <!-- ─── INTRO ─── -->
+  <div class="screen intro active" id="screen-intro">
+    <div class="eyebrow">A Prophetic Diagnostic</div>
+    <h1>What <em>type</em> of prophet are you?</h1>
+    <p class="lead">Scripture names eight distinct prophetic functions, each with its own Hebrew root, grammar, and ministry grace. You carry at least one of them.</p>
+    <p class="lead">Most mature prophets carry more than one. Samuel was both Roeh and Nabi. Gad was both Chozeh and Nabi. Ezekiel was a Tsaphah who saw in Chozeh-visions. Habakkuk opens his book as a Nabi carrying a Massa received through Chozeh-vision. Hybridity is the biblical norm.</p>
+    <p class="lead">This diagnostic walks you through sixteen questions, grounded in the Word, to reveal your prophetic signature — whether that is a single dominant grace or one of the named biblical hybrids.</p>
+
+    <blockquote>
+      Surely the Lord God does nothing, unless He reveals His secret to His servants the prophets.
+      <span>Amos 3:7</span>
+    </blockquote>
+
+    <button class="btn" onclick="startQuiz()">Begin the diagnostic</button>
+    <div class="meta">16 questions + final calibration · 5 minutes · scripture-grounded</div>
+  </div>
+
+  <!-- ─── QUIZ ─── -->
+  <div class="screen" id="screen-quiz">
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span>Question <span class="count" id="q-current">1</span> of <span id="q-total">16</span></span>
+        <span id="q-percent">6%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="question-card" id="question-card"></div>
+
+    <div class="nav-row">
+      <button class="btn-back" id="btn-back" onclick="prevQuestion()" disabled>← Previous</button>
+      <button class="btn" id="btn-next" onclick="nextQuestion()" disabled>Next →</button>
+    </div>
+  </div>
+
+  <!-- ─── RESULT ─── -->
+  <div class="screen" id="screen-result">
+    <div class="result-header">
+      <div class="result-label">Your primary function</div>
+      <div class="result-hebrew" id="r-hebrew"></div>
+      <div class="result-translit" id="r-translit"></div>
+      <div class="result-role" id="r-role"></div>
+    </div>
+
+    <div class="result-section">
+      <div class="section-heading">The calling</div>
+      <div id="r-calling"></div>
+    </div>
+
+    <div class="result-section">
+      <div class="section-heading">Scriptural foundation</div>
+      <div id="r-scripture"></div>
+    </div>
+
+    <div class="result-section">
+      <div class="section-heading">How you typically operate</div>
+      <div class="trait-grid" id="r-traits"></div>
+    </div>
+
+    <div class="result-section">
+      <div class="section-heading">Biblical examples</div>
+      <p id="r-examples"></p>
+    </div>
+
+    <div class="result-section" id="section-secondary">
+      <div class="section-heading">Your secondary stream</div>
+      <p id="r-secondary-intro" style="margin-bottom: 0; color: var(--white-mid);">Most prophetic people carry a primary function and a secondary one they move in and out of. Here is yours.</p>
+      <div class="secondary-card" id="r-secondary"></div>
+    </div>
+
+    <div class="result-section">
+      <div class="section-heading">Where you scored across all eight</div>
+      <div class="score-breakdown" id="r-breakdown"></div>
+    </div>
+
+    <div class="result-section">
+      <div class="section-heading">Stewarding this grace</div>
+      <div id="r-stewardship"></div>
+    </div>
+
+    <div class="cta-row">
+      <button class="btn ghost" onclick="restart()">Take again</button>
+      <button class="btn" onclick="shareResult(this)">Share result</button>
+    </div>
+
+    <div class="footer-note">
+      No diagnostic can replace the inner witness of the Spirit. Hold this prayerfully, test it against Scripture, and confirm it in community with those who know you.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ──────────────────────────────────────────────────────────────
+// PROPHETIC TYPES — grounded in Hebrew roots & scripture
+// ──────────────────────────────────────────────────────────────
+const TYPES = {
+  nabi: {
+    hebrew: "נָבִיא",
+    translit: "Nabi",
+    role: "The Spokesman",
+    calling: "<p>The <strong>Nabi</strong> is the <em>declarer</em> — the one called and commissioned to speak on God's behalf. The root carries the sense of <em>to bubble up, to pour forth, to announce</em>. God breathes a word, and the Nabi cannot contain it.</p><p>This is the most common term for a prophet in the Old Testament, used over 300 times. Where the Roeh is consulted, the Nabi is <strong>sent</strong>. Your mouth is your instrument. The burden of the Lord rests on your lips.</p>",
+    scriptures: [
+      { verse: "And the LORD said to Moses, 'See, I have made you as God to Pharaoh, and Aaron your brother shall be your prophet [nabi].'", ref: "Exodus 7:1" },
+      { verse: "Surely the Lord God does nothing, unless He reveals His secret to His servants the prophets [nabi'im].", ref: "Amos 3:7" }
+    ],
+    traits: [
+      "You feel a pressure to speak; holding the word back feels like fire shut up in your bones (Jer 20:9)",
+      "You are more concerned with faithfulness to the word than with how it lands",
+      "You often speak publicly, corporately, or to leaders — not just privately",
+      "You carry a sense of divine commission, not just gifting",
+      "You prioritise 'thus says the Lord' over 'I feel like'",
+      "You are willing to be unpopular for the sake of accuracy"
+    ],
+    examples: "Moses, Nathan, Elijah, Jeremiah, Ezekiel, and John the Baptist all functioned primarily as Nabi. They were sent. They declared. They did not wait to be consulted.",
+    secondaryBlend: "You declare with authority while also carrying deep insight — the Word lands with both force and understanding.",
+    stewardship: "<p>Your greatest danger is speaking from soul rather than Spirit. Because you are wired to declare, you can declare ahead of God. Train your ear before you train your mouth.</p><p>Build a rhythm where the private place of communion with God vastly outweighs the public place of declaration. Study the Word systematically, not just devotionally. And surround yourself with elders who will tell you when you missed it.</p>"
+  },
+
+  roeh: {
+    hebrew: "רֹאֶה",
+    translit: "Roeh",
+    role: "The Seer (Consulted)",
+    calling: "<p>The <strong>Roeh</strong> is the <em>seer who is sought out</em> — the prophet people come to with questions they cannot answer. The root <em>ra'ah</em> means simply 'to see' or 'to perceive'. This was Samuel's primary title before <em>nabi</em> became the common term (1 Sam 9:9).</p><p>Where the Nabi is sent, the Roeh is found. You carry a weight of revelation people can sense, and they come to you for discernment, direction, and clarity on hidden matters.</p>",
+    scriptures: [
+      { verse: "(Formerly in Israel, when a man went to inquire of God, he spoke thus: 'Come, let us go to the seer [roeh]'; for he who is now called a prophet was formerly called a seer.)", ref: "1 Samuel 9:9" },
+      { verse: "And Samuel answered Saul and said, 'I am the seer [roeh]. Go up before me to the high place...'", ref: "1 Samuel 9:19" }
+    ],
+    traits: [
+      "People naturally bring you their situations and ask what you see",
+      "You perceive hidden things — motives, dynamics, the 'why' beneath the surface",
+      "You are often quieter than a Nabi; your power is in insight, not volume",
+      "You tend to minister one-to-one or in small settings more than on platforms",
+      "You have a history of knowing things you were not told",
+      "You are trusted with confidential matters because you handle revelation carefully"
+    ],
+    examples: "Samuel is the archetypal Roeh — sought out by Saul to find lost donkeys, by the nation to discern a king, by individuals to know the will of God. Hanani also bore this title (2 Chron 16:7).",
+    secondaryBlend: "You see deeply and you also speak clearly — the insight you carry is matched by the ability to release it with prophetic weight.",
+    stewardship: "<p>Your greatest danger is becoming a consultant rather than a servant. People will treat you like an oracle. Resist it. You see for God, not for hire.</p><p>Guard your times of solitude fiercely — the Roeh's strength is in the secret place. And be careful what you release: not everything you see is meant to be shared.</p>"
+  },
+
+  chozeh: {
+    hebrew: "חֹזֶה",
+    translit: "Chozeh",
+    role: "The Visionary",
+    calling: "<p>The <strong>Chozeh</strong> is the <em>seer of visions</em> — one who <em>gazes</em>. The root <em>chazah</em> is more poetic than <em>ra'ah</em>; it means to behold, to perceive in a vision, to see beyond the natural realm. <em>Chazon</em>, the word most often used for prophetic vision, comes from this same root.</p><p>The Chozeh often served in royal courts as a seer and counsellor. Where the Roeh perceives hidden things in the everyday, the Chozeh sees into the unseen realm — dreams, visions, symbolic encounters.</p>",
+    scriptures: [
+      { verse: "Now the acts of King David, first and last, indeed they are written in the book of Samuel the seer [roeh], in the book of Nathan the prophet [nabi], and in the book of Gad the seer [chozeh].", ref: "1 Chronicles 29:29" },
+      { verse: "Then Amaziah said to Amos, 'Go, you seer [chozeh]! Flee to the land of Judah. There eat bread, and there prophesy.'", ref: "Amos 7:12" }
+    ],
+    traits: [
+      "You receive revelation primarily through dreams, visions, and symbolic images",
+      "Your inner life is vivid; you think in pictures before you think in words",
+      "You often need time to interpret what you have seen before you can speak it",
+      "You are drawn to the symbolic, the poetic, and the apocalyptic sections of Scripture",
+      "You sometimes struggle to articulate what you see — it resists flat description",
+      "You operate comfortably in the visionary realm that unsettles others"
+    ],
+    examples: "Gad was David's Chozeh (2 Sam 24:11). Iddo was a Chozeh (2 Chron 9:29). Daniel, Ezekiel, Zechariah, and John on Patmos all functioned heavily in this stream — their books are dense with <em>chazon</em>.",
+    secondaryBlend: "You see vividly in the Spirit and you also declare it with clarity — the vision you receive does not stay trapped inside you.",
+    stewardship: "<p>Your greatest danger is drifting into mysticism without accountability. Visions must be tested, interpreted carefully, and submitted to the plumb-line of Scripture.</p><p>Journal what you see. Date it. Do not rush to publish a vision before it has been weighed. And build strong friendships with Nabis and teachers who can help you interpret what you receive.</p>"
+  },
+
+  tsaphah: {
+    hebrew: "צָפָה",
+    translit: "Tsaphah",
+    role: "The Watchman (Lookout)",
+    calling: "<p>The <strong>Tsaphah</strong> is the <em>watchman who leans forward and peers into the distance</em>. The root means to lean out, to observe, to await, to keep watch from a tower. This is the prophet stationed at the wall, scanning the horizon for what is coming.</p><p>Where the Chozeh sees in vision and the Roeh perceives the present, the Tsaphah <strong>sees what is approaching</strong> — movements, shifts, seasons, threats, and the hand of God long before others notice.</p>",
+    scriptures: [
+      { verse: "I will stand my watch [tsaphah] and set myself on the rampart, and watch to see what He will say to me, and what I will answer when I am corrected.", ref: "Habakkuk 2:1" },
+      { verse: "Son of man, I have made you a watchman [tsaphah] for the house of Israel; therefore hear a word from My mouth, and give them warning from Me.", ref: "Ezekiel 3:17" }
+    ],
+    traits: [
+      "You sense shifts in the spiritual atmosphere before they manifest",
+      "You are drawn to intercession — especially in the early morning or late at night",
+      "You often feel the weight of what is coming, whether judgement or breakthrough",
+      "You are alert, vigilant, and sometimes restless; you find it hard to switch off",
+      "You warn and you wait — both are core to your function",
+      "You see patterns, cycles, and trajectories others miss"
+    ],
+    examples: "Habakkuk stationed himself on the watchtower (Hab 2:1). Ezekiel was appointed as a watchman (Ezek 3:17, 33:7). Isaiah spoke of watchmen on the walls of Jerusalem who never hold their peace (Isa 62:6).",
+    secondaryBlend: "You scan the horizon and you also declare what you see coming — a watchman whose warnings do not stay silent on the wall.",
+    stewardship: "<p>Your greatest danger is burnout and anxiety. The weight of what you sense can crush you if you try to carry it alone. Watchmen are meant to be relieved — nobody stays on the wall forever without rest.</p><p>Guard your sleep, protect your prayer life, and learn to release what you see to God rather than carrying it as your own burden. The Lord neither slumbers nor sleeps — you must.</p>"
+  },
+
+  shamar: {
+    hebrew: "שָׁמַר",
+    translit: "Shamar",
+    role: "The Watchman (Guardian)",
+    calling: "<p>The <strong>Shamar</strong> is the <em>watchman who guards, keeps, and preserves</em>. The root means to hedge about, to keep watch over, to protect. This is the same word used of Adam keeping the garden (Gen 2:15) and of the priests keeping the charge of the sanctuary.</p><p>Where the Tsaphah scans the horizon, the Shamar <strong>stands at the gate</strong>. This prophet has a pastoral edge — they guard people, covenants, legacies, and the things God has entrusted to them.</p>",
+    scriptures: [
+      { verse: "The LORD God took the man and put him in the garden of Eden to tend and keep [shamar] it.", ref: "Genesis 2:15" },
+      { verse: "I have set watchmen on your walls, O Jerusalem; they shall never hold their peace day or night. You who make mention of the LORD, do not keep silent.", ref: "Isaiah 62:6" }
+    ],
+    traits: [
+      "You carry a strong protective instinct for people, places, and movements",
+      "You guard truth, doctrine, or a spiritual inheritance entrusted to you",
+      "You often function as a spiritual covering for others — intercessor, elder, pastor-prophet",
+      "You have a deep sense of responsibility for what God has placed in your care",
+      "You notice when something is out of place or when the gates are being breached",
+      "You value faithfulness and stewardship over platform and reach"
+    ],
+    examples: "The Levites were commanded to keep (shamar) the charge of the tabernacle (Num 18:3-7). Anna the prophetess, who did not depart from the temple, embodied this guarding watchfulness (Luke 2:36-38).",
+    secondaryBlend: "You guard what God has entrusted to you and you also see what is coming against it — a watchman with both a gate and a horizon.",
+    stewardship: "<p>Your greatest danger is over-functioning and control. Guarding can subtly turn into gate-keeping; protection can harden into suspicion. Only God is the ultimate Shamar of His people.</p><p>Learn to hand things back to the Lord rather than keeping them yourself. Rest is obedience for you. And remember: you are called to guard the flock, not to own it.</p>"
+  },
+
+  nataph: {
+    hebrew: "נָטַף",
+    translit: "Nataph",
+    role: "The One Who Drops the Word",
+    calling: "<p>The <strong>Nataph</strong> is the <em>prophet whose words drop</em>. The root means to drop, to drip, to distil, to prophesy by inspiration. The imagery is of rain or honey falling from the heavens — words that land with weight, sweetness, and a saturating effect.</p><p>Where the Nabi declares with force, the Nataph <strong>releases</strong>. Where the Chozeh sees vision, the Nataph speaks what drops on them in the moment. This is often the flow of prophetic preaching and spontaneous utterance — words that come as you open your mouth.</p>",
+    scriptures: [
+      { verse: "Do not prattle [nataph],' you say to those who prophesy. So they shall not prophesy [nataph] to you; they shall not return insult for insult.", ref: "Micah 2:6" },
+      { verse: "Son of man, set your face toward the south; preach [nataph] against the south, and prophesy against the forest land, the South.", ref: "Ezekiel 20:46" }
+    ],
+    traits: [
+      "You flow prophetically when you preach, teach, or speak spontaneously",
+      "You often do not know exactly what you will say until you open your mouth",
+      "Your words have a saturating, dripping effect — people marinate in them afterwards",
+      "You move in the prophetic primarily through utterance, not vision or strategy",
+      "You are comfortable with the spontaneous and uncomfortable with rigid scripts",
+      "Worship, prayer, and the pulpit often become the place where revelation drops"
+    ],
+    examples: "Micah, Amos, and Ezekiel all use nataph for their prophetic speech. The Song of Songs describes the bride's lips as dropping (nataph) honey — the same imagery the prophets carry in their mouths.",
+    secondaryBlend: "Your words drop with inspiration and carry the weight of formal declaration — a fluid prophetic flow anchored by apostolic authority.",
+    stewardship: "<p>Your greatest danger is mistaking flow for accuracy. Not everything that drops is the Lord; sometimes it is soul, emotion, or cultural air. Learn to discern the difference.</p><p>Do not despise preparation just because you flow. Study. Abide. Fill your vessel so that what drops from you is mature. And always be willing to be corrected mid-flow by the Spirit Himself.</p>"
+  },
+
+  massa: {
+    hebrew: "מַשָּׂא",
+    translit: "Massa",
+    role: "The Burden-Bearer",
+    calling: "<p>The <strong>Massa</strong> is the <em>prophet of the burden</em> — the one who carries a weighty oracle. The root <em>nasa</em> means to lift up, to carry. A Massa is something taken up with solemnity on the lips: a heavy utterance, often of judgement, but sometimes of destiny and purpose (Zech 12:1; Mal 1:1).</p><p>Where the Nataph releases words that drop lightly, the Massa <strong>lifts up</strong> a word that weighs heavily. This is the prophet who labours under a specific assignment, often over nations, cities, or seasons — and cannot rest until it is delivered.</p>",
+    scriptures: [
+      { verse: "The burden [massa] against Babylon which Isaiah the son of Amoz saw.", ref: "Isaiah 13:1" },
+      { verse: "The burden [massa] which the prophet Habakkuk saw.", ref: "Habakkuk 1:1" },
+      { verse: "The burden [massa] of the word of the LORD to Israel by Malachi.", ref: "Malachi 1:1" }
+    ],
+    traits: [
+      "You carry specific prophetic assignments over nations, cities, spheres, or seasons",
+      "You feel physical or emotional weight when an unreleased word is on you",
+      "Your words often concern judgement, justice, destiny, or the purposes of God over territories",
+      "You are willing to speak hard things others avoid",
+      "You labour in prayer until a burden lifts — you know the difference between carrying and releasing",
+      "You are drawn to intercession that feels like travail"
+    ],
+    examples: "Isaiah carried burdens against Babylon, Moab, Damascus, Egypt, and Tyre (Isa 13-23). Nahum's whole book is 'the burden against Nineveh' (Nah 1:1). Habakkuk, Zechariah, and Malachi all carried massa as their primary function.",
+    secondaryBlend: "You lift up heavy oracles and you also gaze into visions to receive them — the weight you carry comes from what you have seen.",
+    stewardship: "<p>Your greatest danger is carrying what is not yours to carry. The burden of the Lord is assigned; it is not self-generated. Learn to distinguish between a true massa and your own striving.</p><p>Release what you have been given through prayer, declaration, and obedience. Do not bottle it. And when the burden lifts, let it lift — do not keep rehearsing it. God gives new assignments to those who finish old ones.</p>"
+  },
+
+  ishHaElohim: {
+    hebrew: "אִישׁ הָאֱלֹהִים",
+    translit: "Ish HaElohim",
+    role: "The Man of God",
+    calling: "<p>The <strong>Ish HaElohim</strong> is the <em>man or woman of God</em> — a broader designation used around 76 times in the Old Testament for one whose entire life bears the signature of the Lord. This is less a function than a <strong>designation of character</strong>.</p><p>Where others are known by what they say or see, the Ish HaElohim is known by who they <em>are</em>. The anointing is on the person, not just the gift. Their presence carries God; their life preaches before their mouth opens.</p>",
+    scriptures: [
+      { verse: "And there came a man of God [ish ha'elohim] to Eli and said to him, 'Thus says the LORD...'", ref: "1 Samuel 2:27" },
+      { verse: "Now I know that you are a man of God [ish ha'elohim], and that the word of the LORD in your mouth is the truth.", ref: "1 Kings 17:24" }
+    ],
+    traits: [
+      "People describe you by your character and presence before they describe your gift",
+      "The anointing seems to rest on your whole life, not just moments of ministry",
+      "You have a strong internal sense of consecration and set-apartness",
+      "You tend to carry multiple prophetic streams rather than specialising in one",
+      "Your reputation for holiness opens doors your gift alone could not open",
+      "You often function as a father or mother figure to other prophets"
+    ],
+    examples: "Moses, Samuel, Elijah, Elisha, and David are all called 'man of God' in scripture. It is the designation of one whose walk with God has become the ministry itself.",
+    secondaryBlend: "Your character is your ministry and your words carry weight because of who you are — a walking revelation, not just a speaking one.",
+    stewardship: "<p>Your greatest danger is the appearance of godliness without its power. Because the title rests on character, hypocrisy is the one sin that would undo you most. Guard your inner life at all costs.</p><p>Do not chase platforms; chase communion. Let your secret place be greater than your public place. The Ish HaElohim is formed in decades, not days — steward the long obedience in the same direction.</p>"
+  }
+};
+
+// ──────────────────────────────────────────────────────────────
+// HYBRID ARCHETYPES — biblical pairings that commonly occur
+// Triggered when top-two scores are close (within threshold)
+// Keys are alphabetised pairs: "chozeh+tsaphah", "nabi+massa" etc.
+// ──────────────────────────────────────────────────────────────
+const HYBRIDS = {
+  "massa+nabi": {
+    name: "The Oracle Prophet",
+    hebrew: "נָבִיא מַשָּׂא",
+    translit: "Nabi-Massa",
+    face: "Isaiah · Jeremiah · Nahum",
+    calling: "<p>You are <strong>the Oracle Prophet</strong> — one who is sent and who carries weight. The declarative power of the <em>Nabi</em> meets the burden-bearing capacity of the <em>Massa</em>. You do not simply speak — you lift up heavy utterances over nations, cities, and seasons, and you release them with apostolic authority.</p><p>This is the pattern of Isaiah, whose book is framed around the massa he carried against Babylon, Moab, Damascus, Egypt, and Tyre (Isa 13-23). It is the pattern of Jeremiah, whose word was fire shut up in his bones (Jer 20:9). Where the pure Nabi declares, you <strong>deliver a weight</strong>. Where the pure Massa labours under a burden, you <strong>release it publicly</strong>.</p>",
+    keyScripture: { verse: "The burden against Babylon which Isaiah the son of Amoz saw.", ref: "Isaiah 13:1" },
+    signature: "You are most alive when carrying a specific weighty word for a specific sphere — a nation, a church movement, a season — and releasing it with authority until it lands. You feel the pressure to declare and the pressure of the burden simultaneously.",
+    warning: "Your twin temptations are speaking before the burden has matured, and letting the weight crush you before you release it. Learn the difference between a word that is ready and a word that is still cooking. And do not carry alone what God intended for you to release."
+  },
+
+  "nabi+nataph": {
+    name: "The Flowing Declarer",
+    hebrew: "נָבִיא נָטַף",
+    translit: "Nabi-Nataph",
+    face: "Amos · Micah · John the Baptist",
+    calling: "<p>You are <strong>the Flowing Declarer</strong> — commissioned to speak, and when you open your mouth, the word drops. The apostolic authority of the <em>Nabi</em> flows through the saturating stream of the <em>Nataph</em>. You preach, and rain falls. You declare, and words drip like honey and burn like coals.</p><p>This is Amos, the herdsman whose untrained lips carried a word so heavy it unsettled kings. This is Micah, who used <em>nataph</em> explicitly of his prophetic speech (Mic 2:6). Where the pure Nabi declares with force, and the pure Nataph flows in the moment, you <strong>combine both</strong> — sent with authority, releasing with saturation.</p>",
+    keyScripture: { verse: "Do not prattle [nataph], you say to those who prophesy. So they shall not prophesy [nataph] to you...", ref: "Micah 2:6" },
+    signature: "You are most alive in the pulpit, in worship, in spontaneous moments — anywhere your mouth can open and the word can drop. You rarely know exactly what you will say until you begin, but what comes lands heavy.",
+    warning: "Your greatest danger is confusing fluency with accuracy. Because words flow easily through you, you can mistake soul for Spirit. Test your flow. Not everything that drips is honey; some is venom you picked up from the air."
+  },
+
+  "chozeh+tsaphah": {
+    name: "The Visionary Watchman",
+    hebrew: "חֹזֶה צָפָה",
+    translit: "Chozeh-Tsaphah",
+    face: "Ezekiel · Habakkuk · Daniel",
+    calling: "<p>You are <strong>the Visionary Watchman</strong> — the prophet who sees in vision what is coming in time. The gazing grace of the <em>Chozeh</em> meets the horizon-scanning vigilance of the <em>Tsaphah</em>. You stand on the watchtower and see not just what approaches, but what it means.</p><p>This is Ezekiel, commissioned as a watchman (Ezek 3:17, 33:7) while receiving some of Scripture's most elaborate visions. This is Habakkuk, who stationed himself on his rampart to see what God would say (Hab 2:1). Where the pure Chozeh receives visions without temporal urgency, and the pure Tsaphah senses coming shifts without full vision, you <strong>see and warn simultaneously</strong> — the vision carries the timing.</p>",
+    keyScripture: { verse: "I will stand my watch [tsaphah] and set myself on the rampart, and watch to see what He will say to me.", ref: "Habakkuk 2:1" },
+    signature: "You are most alive in the secret place, where visions unfold and the horizon becomes clear. Your intercession is visionary; your watching is revelatory. You carry dreams and images that relate to specific seasons, shifts, and times.",
+    warning: "Your greatest danger is isolation. The Visionary Watchman often sees alone, prays alone, and burns out alone. Build a community of interpreters around you. And remember — a vision unreleased becomes a burden; a burden uninterpreted becomes confusion."
+  },
+
+  "chozeh+massa": {
+    name: "The Apocalyptic Burden-Bearer",
+    hebrew: "חֹזֶה מַשָּׂא",
+    translit: "Chozeh-Massa",
+    face: "Daniel · John on Patmos · Zechariah",
+    calling: "<p>You are <strong>the Apocalyptic Burden-Bearer</strong> — one who sees vast visions and carries them as a weight. The gazing grace of the <em>Chozeh</em> meets the oracular weight of the <em>Massa</em>. You do not receive small visions; you receive visions of ages, nations, thrones, and ends.</p><p>This is Daniel, whose nights were filled with visions of kingdoms rising and falling. This is John on Patmos, whose Apocalypse is called a revelation (<em>apokalypsis</em>) that he was commanded to write. This is Zechariah, whose book opens with massa and is filled with chazon. You see big, and you carry heavy.</p>",
+    keyScripture: { verse: "The burden [massa] of the word of the LORD... 'Thus says the LORD who stretches out the heavens, lays the foundation of the earth, and forms the spirit of man within him.'", ref: "Zechariah 12:1" },
+    signature: "Your visions tend to be cosmic, symbolic, and weighty. You are drawn to Daniel, Ezekiel, Zechariah, and Revelation. You carry visions that concern nations, generations, and the unfolding purposes of God — and you feel their weight until you release them.",
+    warning: "Your greatest danger is getting lost in the symbolic and failing to ground what you see in the present. Apocalyptic vision without practical interpretation becomes speculation. Journal, date, and submit what you see to wise counsel before releasing it."
+  },
+
+  "chozeh+roeh": {
+    name: "The Seer of Both Realms",
+    hebrew: "רֹאֶה חֹזֶה",
+    translit: "Roeh-Chozeh",
+    face: "Samuel · Gad · Iddo",
+    calling: "<p>You are <strong>the Seer of Both Realms</strong> — one who perceives hidden things in the natural and sees into the unseen. The penetrating insight of the <em>Roeh</em> meets the visionary gaze of the <em>Chozeh</em>. You see what is and what is shown.</p><p>This is Gad, David's seer, called both <em>chozeh</em> and <em>ro'eh</em> in 1 Chronicles 29:29. This is Iddo, described as a <em>chozeh</em> who also perceived (<em>ra'ah</em>) concerning Jeroboam (2 Chron 9:29). Where the pure Roeh perceives the present and the pure Chozeh sees visions, you <strong>do both fluidly</strong> — natural discernment flows into supernatural vision and back again.</p>",
+    keyScripture: { verse: "The acts of King David, first and last, indeed they are written in the book of Samuel the seer [roeh], in the book of Nathan the prophet [nabi], and in the book of Gad the seer [chozeh].", ref: "1 Chronicles 29:29" },
+    signature: "You are most alive in one-to-one conversations and small settings where you can both perceive and see. People bring you their situations, and what unfolds is both discernment and vision — you tell them what you see, and what you see often comes in pictures.",
+    warning: "Your greatest danger is exhaustion from constant perception. Because you see in both realms, your spirit is always active. Learn to switch off. Not every encounter requires you to see; sometimes presence is enough."
+  },
+
+  "ishHaElohim+roeh": {
+    name: "The Sought Father",
+    hebrew: "רֹאֶה אִישׁ הָאֱלֹהִים",
+    translit: "Roeh - Ish HaElohim",
+    face: "Samuel · Elisha · Anna",
+    calling: "<p>You are <strong>the Sought Father (or Mother)</strong> — one people come to because of both who you are and what you see. The consulted grace of the <em>Roeh</em> meets the consecrated character of the <em>Ish HaElohim</em>. Your insight is trusted because your life is trusted.</p><p>This is Samuel, called both <em>roeh</em> and <em>ish elohim</em> (1 Sam 9:6-11), the one the nation sought from childhood to old age. This is Elisha, repeatedly called a man of God, whose door was always open. This is Anna, who did not depart from the temple. Where the pure Roeh is a consultant, and the pure Ish HaElohim is a presence, you <strong>combine both</strong> — your home becomes a place of pilgrimage.</p>",
+    keyScripture: { verse: "Look now, there is in this city a man of God [ish ha'elohim], and he is an honourable man; all that he says surely comes to pass. So let us go there; perhaps he can show us the way.", ref: "1 Samuel 9:6" },
+    signature: "You are most alive when people come to you — for counsel, for discernment, for presence. You carry the authority of years with God, and people sense it. Your home or your table often becomes a prophetic place.",
+    warning: "Your greatest danger is becoming the centre rather than pointing to the centre. People will want to depend on you. Constantly redirect them to the Lord. And guard your private life fiercely — the Ish HaElohim is undone the moment private and public diverge."
+  },
+
+  "shamar+tsaphah": {
+    name: "The Gatekeeper",
+    hebrew: "צָפָה שָׁמַר",
+    translit: "Tsaphah-Shamar",
+    face: "Anna · Nehemiah · the Levitical watchmen",
+    calling: "<p>You are <strong>the Gatekeeper</strong> — one who watches what approaches and guards what has been entrusted. The horizon-scanning vigilance of the <em>Tsaphah</em> meets the protective keeping of the <em>Shamar</em>. You stand at the gate and on the wall at the same time.</p><p>This is Anna, who did not depart from the temple but served God with fastings and prayers night and day (Luke 2:37). This is Nehemiah, who set watchmen on the walls and guarded the rebuilding of Jerusalem. This is the Levitical pattern — keeping the charge of the tabernacle and watching against intrusion.</p>",
+    keyScripture: { verse: "I have set watchmen on your walls, O Jerusalem; they shall never hold their peace day or night. You who make mention of the LORD, do not keep silent.", ref: "Isaiah 62:6" },
+    signature: "You are most alive in intercession, in the night watch, in the long work of protecting what God has entrusted. You pray for nations, churches, leaders, and spiritual inheritances — and you do not let go.",
+    warning: "Your greatest danger is carrying the weight as if it were yours. You are a watchman on God's wall, not the wall itself. Rest is obedience. Hand things back. The Lord neither slumbers nor sleeps — but you must."
+  },
+
+  "ishHaElohim+nabi": {
+    name: "The Sent Man of God",
+    hebrew: "נָבִיא אִישׁ הָאֱלֹהִים",
+    translit: "Nabi - Ish HaElohim",
+    face: "Moses · Elijah · John the Baptist",
+    calling: "<p>You are <strong>the Sent Man (or Woman) of God</strong> — one commissioned to declare, carried by the weight of a consecrated life. The apostolic authority of the <em>Nabi</em> meets the character grace of the <em>Ish HaElohim</em>. Your word carries weight because your walk does.</p><p>This is Moses, the archetypal Nabi who was also the first called <em>ish elohim</em> (Deut 33:1). This is Elijah, whose declarations shut the heavens because his life was hidden in God. This is John the Baptist, whose sent-ness and consecration were indistinguishable. You do not just carry a message; you <em>are</em> a message.</p>",
+    keyScripture: { verse: "And the woman said to Elijah, 'Now by this I know that you are a man of God [ish ha'elohim], and that the word of the LORD in your mouth is the truth.'", ref: "1 Kings 17:24" },
+    signature: "Your ministry is not separable from your life. People encounter your word and your walk as one thing. You tend to carry long prophetic arcs — seasons, movements, whole assignments — because the commission rests on the person, not just the moment.",
+    warning: "Your greatest danger is the gap between public and private. The more your authority rests on character, the more devastating a moral failure would be. Guard the secret place at all costs. And do not mistake influence for formation — the Sent Man of God is forged in decades, not platforms."
+  },
+
+  "ishHaElohim+shamar": {
+    name: "The Consecrated Guardian",
+    hebrew: "שָׁמַר אִישׁ הָאֱלֹהִים",
+    translit: "Shamar - Ish HaElohim",
+    face: "Samuel · Elisha · the Levites",
+    calling: "<p>You are <strong>the Consecrated Guardian</strong> — one who guards what is entrusted through the weight of who they are. The protective keeping of the <em>Shamar</em> meets the consecrated presence of the <em>Ish HaElohim</em>. Your guardianship is not procedural; it is pastoral, spiritual, fatherly.</p><p>This is Samuel who guarded Israel's covenant life from Ramah. This is Elisha who watched over the sons of the prophets. This is the Levitical pattern — keeping the charge of the sanctuary because they themselves were set apart.</p>",
+    keyScripture: { verse: "The LORD God took the man and put him in the garden of Eden to tend and keep [shamar] it.", ref: "Genesis 2:15" },
+    signature: "You are most alive when stewarding — a church, a movement, a family line, a prophetic inheritance. You protect not by gate-keeping but by presence. People under your covering feel safer because you are there.",
+    warning: "Your greatest danger is over-identifying with what you guard. You are the steward, not the owner. Hold loosely. And remember: even a faithful guardian eventually hands over the charge. Begin now to raise those who will carry it after you."
+  },
+
+  "chozeh+nataph": {
+    name: "The Inspired Seer",
+    hebrew: "נָטַף חֹזֶה",
+    translit: "Nataph-Chozeh",
+    face: "Zechariah · the Psalmists · some of Ezekiel",
+    calling: "<p>You are <strong>the Inspired Seer</strong> — one whose words drop directly from what is seen. The flowing utterance of the <em>Nataph</em> meets the visionary gaze of the <em>Chozeh</em>. You see, and as you see, words begin to fall.</p><p>This is the pattern of much of Zechariah, whose visions flow into song and declaration. This is the prophetic edge in the Psalms — David as seer and singer. This is Ezekiel's sign-acts and spontaneous declarations (Ezek 20:46). Where the pure Chozeh processes visions slowly, and the pure Nataph flows without vision, you <strong>vision and flow simultaneously</strong>.</p>",
+    keyScripture: { verse: "Son of man, set your face toward the south; preach [nataph] against the south, and prophesy against the forest land, the South.", ref: "Ezekiel 20:46" },
+    signature: "You are most alive in worship, in prayer, in creative expression — anywhere vision and words can flow together. You often sing, write, or speak what you see as it unfolds. The act of releasing is part of the seeing.",
+    warning: "Your greatest danger is releasing visions prematurely. Because the flow is immediate, what you saw in seed form can get declared as if it were mature. Learn to sit on some visions. Not every seeing is meant to be spoken the same day."
+  }
+};
+
+
+// ──────────────────────────────────────────────────────────────
+// QUESTIONS — weights tuned so genuine hybrids are detectable
+// Balance rule: when an option belongs equally to two types,
+// they get equal weights (e.g. {nabi: 2, massa: 2}) rather than
+// privileging one arbitrarily.
+// ──────────────────────────────────────────────────────────────
+const QUESTIONS = [
+  {
+    ref: "How you primarily receive",
+    q: "When God speaks to you, how does it most often come?",
+    options: [
+      { text: "As a word or phrase that rises up inside me and demands to be spoken", weights: { nabi: 3, nataph: 3, massa: 1 } },
+      { text: "As pictures, dreams, or visions I need to interpret afterwards", weights: { chozeh: 3, nataph: 1, tsaphah: 1 } },
+      { text: "As a deep inner knowing about a person, situation, or hidden matter", weights: { roeh: 3, ishHaElohim: 2, shamar: 1 } },
+      { text: "As a sense of something approaching — a shift, a warning, or a season coming", weights: { tsaphah: 3, massa: 2, shamar: 1 } }
+    ]
+  },
+  {
+    ref: "The posture of your ministry",
+    q: "Which best describes how God tends to use you?",
+    options: [
+      { text: "I am sent. I go to people, platforms, or nations to declare what God has said", weights: { nabi: 3, massa: 2, ishHaElohim: 1 } },
+      { text: "I am sought. People come to me with situations and ask what I see", weights: { roeh: 3, ishHaElohim: 2, chozeh: 1 } },
+      { text: "I watch. I stand in intercession and prayer, alert to what is coming", weights: { tsaphah: 3, shamar: 2, massa: 1 } },
+      { text: "I guard. I protect and keep watch over people, truth, or a spiritual inheritance", weights: { shamar: 3, ishHaElohim: 2, tsaphah: 1 } }
+    ]
+  },
+  {
+    ref: "Genesis 2:15 · Ezekiel 3:17",
+    q: "Which scripture most grips you when you read it?",
+    options: [
+      { text: "'I have set watchmen on your walls, O Jerusalem; they shall never hold their peace' (Isa 62:6)", weights: { shamar: 3, tsaphah: 3 } },
+      { text: "'His word was in my heart like a burning fire shut up in my bones' (Jer 20:9)", weights: { nabi: 3, massa: 3 } },
+      { text: "'I will stand my watch and set myself on the rampart, and watch to see what He will say' (Hab 2:1)", weights: { tsaphah: 3, chozeh: 3 } },
+      { text: "'Now I know that you are a man of God, and the word of the LORD in your mouth is truth' (1 Kings 17:24)", weights: { ishHaElohim: 3, nabi: 3 } }
+    ]
+  },
+  {
+    ref: "How you hold a word",
+    q: "When you receive a prophetic word, what usually happens to you?",
+    options: [
+      { text: "I feel a physical or emotional weight until I release it — it is a burden", weights: { massa: 3, tsaphah: 2, nabi: 1 } },
+      { text: "I see it in pictures and have to sit with it before I can interpret it", weights: { chozeh: 3, roeh: 2, nataph: 1 } },
+      { text: "It drops out of me when I open my mouth, even if I had not prepared it", weights: { nataph: 3, nabi: 2, chozeh: 1 } },
+      { text: "I hold it quietly until the right person asks me about it", weights: { roeh: 3, shamar: 2, ishHaElohim: 1 } }
+    ]
+  },
+  {
+    ref: "Where you most operate",
+    q: "Where does your prophetic gifting tend to flow most naturally?",
+    options: [
+      { text: "In the pulpit, on platforms, or in public declaration", weights: { nabi: 3, nataph: 3 } },
+      { text: "In one-to-one conversations, coaching, or private counsel", weights: { roeh: 3, ishHaElohim: 2, chozeh: 1 } },
+      { text: "In the prayer closet, in intercession, in the secret place", weights: { tsaphah: 3, shamar: 2, massa: 2 } },
+      { text: "In the atmosphere of my everyday life — my presence itself carries something", weights: { ishHaElohim: 3, shamar: 2 } }
+    ]
+  },
+  {
+    ref: "1 Samuel 9:9",
+    q: "Which description resonates most with your inner life?",
+    options: [
+      { text: "I am often given dreams and visions I have to journal and revisit", weights: { chozeh: 3, tsaphah: 2, nataph: 1 } },
+      { text: "I feel responsible for guarding something God has entrusted to me", weights: { shamar: 3, ishHaElohim: 2 } },
+      { text: "I cannot shake specific nations, cities, or issues — they weigh on me", weights: { massa: 3, tsaphah: 2, chozeh: 1 } },
+      { text: "I am restless until I have spoken what is on my heart", weights: { nabi: 3, nataph: 2, ishHaElohim: 1 } }
+    ]
+  },
+  {
+    ref: "The weight you carry",
+    q: "Which statement best describes what you labour under?",
+    options: [
+      { text: "A sense of divine commissioning — I have been sent with a message", weights: { nabi: 3, ishHaElohim: 3, massa: 1 } },
+      { text: "A specific assignment over a nation, region, or sphere", weights: { massa: 3, chozeh: 2, tsaphah: 1 } },
+      { text: "A responsibility to protect people and things God has placed under my care", weights: { shamar: 3, ishHaElohim: 2 } },
+      { text: "An awareness of what is coming and a duty to warn", weights: { tsaphah: 3, shamar: 2, massa: 1 } }
+    ]
+  },
+  {
+    ref: "How you process revelation",
+    q: "When the Spirit moves on you, what tends to happen first?",
+    options: [
+      { text: "My mouth opens and words begin to drop before I have processed them", weights: { nataph: 3, nabi: 2 } },
+      { text: "I see an image, a picture, or a scene unfolding in my mind", weights: { chozeh: 3, tsaphah: 1, nataph: 1 } },
+      { text: "I suddenly know something about someone I had no way of knowing", weights: { roeh: 3, ishHaElohim: 2 } },
+      { text: "I feel a deep stirring or unease long before any word comes", weights: { tsaphah: 2, massa: 3, shamar: 1 } }
+    ]
+  },
+  {
+    ref: "Your relationship to authority",
+    q: "How do you tend to engage with leaders and kings?",
+    options: [
+      { text: "I confront. I bring correction and calls to repentance — like Nathan to David", weights: { nabi: 3, massa: 3 } },
+      { text: "I counsel. I sit with them, hear their situations, and offer what I see", weights: { roeh: 3, chozeh: 3 } },
+      { text: "I intercede. I pray and watch over them in secret", weights: { tsaphah: 3, shamar: 3 } },
+      { text: "I am sent and I live it. The weight of commissioning rests on my whole life, not just my words", weights: { ishHaElohim: 3, nabi: 3 } }
+    ]
+  },
+  {
+    ref: "1 Chronicles 29:29",
+    q: "Of these three — Samuel the seer, Nathan the prophet, Gad the seer — which one are you most drawn to?",
+    options: [
+      { text: "Samuel — consulted, trusted with the nation's discernment, deeply perceptive", weights: { roeh: 3, ishHaElohim: 3 } },
+      { text: "Nathan — sent, confronting, speaking on God's behalf to the king", weights: { nabi: 3, massa: 2 } },
+      { text: "Gad — the visionary seer, moving in chazon, advising from the unseen", weights: { chozeh: 3, roeh: 3 } },
+      { text: "None feel quite like me — my whole life is the ministry more than any one function", weights: { ishHaElohim: 3, shamar: 2 } }
+    ]
+  },
+  {
+    ref: "How others describe you",
+    q: "What do people most often say about you?",
+    options: [
+      { text: "'You are so bold. You always say what needs to be said'", weights: { nabi: 3, nataph: 2, ishHaElohim: 1 } },
+      { text: "'You see things. You notice what others miss'", weights: { roeh: 3, chozeh: 3 } },
+      { text: "'You are a watchman. You are always praying for people'", weights: { tsaphah: 3, shamar: 3 } },
+      { text: "'You carry a presence. Something of God rests on you'", weights: { ishHaElohim: 3, shamar: 1 } }
+    ]
+  },
+  {
+    ref: "What exhausts you",
+    q: "Which of these most often drains you?",
+    options: [
+      { text: "Holding back a word I know I am meant to release", weights: { nabi: 3, nataph: 2, massa: 2 } },
+      { text: "Carrying a vision nobody around me can interpret or steward", weights: { chozeh: 3, massa: 2, roeh: 1 } },
+      { text: "Sensing what is coming and feeling unable to shift it through prayer alone", weights: { tsaphah: 3, shamar: 2, massa: 1 } },
+      { text: "Watching something I guard be mishandled or neglected by others", weights: { shamar: 3, ishHaElohim: 2 } }
+    ]
+  },
+  {
+    ref: "Your prophetic instrument",
+    q: "Which is most true of how you release what God gives you?",
+    options: [
+      { text: "My words drip — preaching, praying, and speaking carry a flow that saturates people", weights: { nataph: 3, nabi: 2, chozeh: 2 } },
+      { text: "My words weigh — when I speak, what lands often concerns destinies, nations, or seasons", weights: { massa: 3, nabi: 2, chozeh: 1 } },
+      { text: "My words reveal — I tell people what I see and it unlocks them", weights: { roeh: 3, chozeh: 2, ishHaElohim: 1 } },
+      { text: "My words guard — I speak to protect, correct course, or keep the charge", weights: { shamar: 3, ishHaElohim: 2, tsaphah: 1 } }
+    ]
+  },
+  {
+    ref: "Isaiah 6 · Ezekiel 1 · Revelation 1",
+    q: "Which prophetic encounter moves you most?",
+    options: [
+      { text: "Isaiah seeing the Lord high and lifted up and crying 'Here am I, send me'", weights: { nabi: 3, ishHaElohim: 3 } },
+      { text: "Ezekiel by the River Chebar, the heavens opened, visions of God", weights: { chozeh: 3, tsaphah: 3 } },
+      { text: "Habakkuk on his watchtower, waiting to see what God would say", weights: { tsaphah: 3, massa: 2, chozeh: 1 } },
+      { text: "John on Patmos, receiving the weight of the Apocalypse", weights: { chozeh: 3, massa: 3 } }
+    ]
+  },
+  {
+    ref: "Where you feel most at home",
+    q: "Which of these rhythms is most life-giving to you?",
+    options: [
+      { text: "Declaring, teaching, or preaching the word publicly", weights: { nabi: 3, nataph: 3 } },
+      { text: "Long hours in the secret place, interceding and watching", weights: { tsaphah: 3, shamar: 2, massa: 1 } },
+      { text: "Walking alongside individuals, helping them hear God", weights: { roeh: 3, ishHaElohim: 3 } },
+      { text: "Journalling, drawing, singing, or meditating on dreams and visions until they flow out", weights: { chozeh: 3, nataph: 3 } }
+    ]
+  },
+  {
+    ref: "Your greatest temptation",
+    q: "Which struggle most often threatens your ministry?",
+    options: [
+      { text: "Speaking ahead of God because I am wired to declare", weights: { nabi: 3, nataph: 3 } },
+      { text: "Becoming a consultant people use rather than a servant God sends", weights: { roeh: 3, chozeh: 2, ishHaElohim: 1 } },
+      { text: "Burnout from carrying weight, intercession, or burdens I was never meant to bear alone", weights: { massa: 3, tsaphah: 3, shamar: 2 } },
+      { text: "The appearance of godliness without its reality — hypocrisy in the secret place", weights: { ishHaElohim: 3, shamar: 2, nabi: 2 } }
+    ]
+  }
+];
+
+// ──────────────────────────────────────────────────────────────
+// CALIBRATION — final multi-select question (optional)
+// Let people flag additional traits that resonate, giving a small
+// boost (1 point each, capped) to types they might under-score on.
+// ──────────────────────────────────────────────────────────────
+const CALIBRATION = {
+  ref: "Final calibration · optional",
+  q: "Before you see your result — tick any of these that also ring true for you.",
+  subtitle: "This helps refine the reading. Select as many as apply. Leave blank if none fit.",
+  statements: [
+    { text: "I am willing to say hard things others avoid, even when it costs me", types: ["nabi", "massa"] },
+    { text: "People bring me their situations and ask what I see", types: ["roeh", "ishHaElohim"] },
+    { text: "I receive significant dreams or visions that stay with me", types: ["chozeh"] },
+    { text: "I sense spiritual shifts in the atmosphere before they manifest", types: ["tsaphah"] },
+    { text: "I carry a protective instinct over people or truth God has entrusted to me", types: ["shamar"] },
+    { text: "My words often flow most powerfully when I have not prepared them", types: ["nataph"] },
+    { text: "I carry specific weight over nations, cities, or spheres — they sit heavy on me", types: ["massa", "tsaphah"] },
+    { text: "People describe me more by my character or presence than my gift", types: ["ishHaElohim"] },
+    { text: "I have a strong sense of being sent, not just gifted", types: ["nabi", "ishHaElohim"] },
+    { text: "I often intercede in the night or early morning without being asked", types: ["tsaphah", "shamar"] },
+    { text: "I see pictures or symbols that unlock meaning for me and others", types: ["chozeh", "roeh"] },
+    { text: "I feel a physical or emotional weight until I release a word", types: ["massa"] },
+    { text: "Preaching, singing, or praying aloud is where I most come alive — words flow like rain", types: ["nataph"] },
+    { text: "I am drawn to the symbolic and poetic parts of Scripture more than the didactic", types: ["chozeh", "nataph"] }
+  ]
+};
+
+// ──────────────────────────────────────────────────────────────
+// STATE
+// ──────────────────────────────────────────────────────────────
+let currentQ = 0;
+let answers = new Array(QUESTIONS.length).fill(null);
+let calibrationSelections = []; // indices of selected calibration statements
+let onCalibration = false;
+
+// ──────────────────────────────────────────────────────────────
+// SCREEN CONTROL
+// ──────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function startQuiz() {
+  currentQ = 0;
+  answers = new Array(QUESTIONS.length).fill(null);
+  calibrationSelections = [];
+  onCalibration = false;
+  // Total shown = main questions + 1 calibration step
+  document.getElementById('q-total').textContent = QUESTIONS.length + 1;
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+// ──────────────────────────────────────────────────────────────
+// QUESTION RENDERING
+// ──────────────────────────────────────────────────────────────
+function renderQuestion() {
+  if (onCalibration) {
+    renderCalibration();
+    return;
+  }
+
+  const q = QUESTIONS[currentQ];
+  const card = document.getElementById('question-card');
+  card.innerHTML = `
+    <div class="scripture-ref">${q.ref}</div>
+    <h2 class="question">${q.q}</h2>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <button class="option ${answers[currentQ] === i ? 'selected' : ''}" onclick="selectOption(${i})">
+          ${opt.text}
+        </button>
+      `).join('')}
+    </div>
+  `;
+
+  // Re-trigger animation
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = '';
+
+  // Progress — main questions are steps 1..N, calibration is step N+1
+  const totalSteps = QUESTIONS.length + 1;
+  document.getElementById('q-current').textContent = currentQ + 1;
+  const pct = Math.round(((currentQ + 1) / totalSteps) * 100);
+  document.getElementById('q-percent').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  // Nav
+  document.getElementById('btn-back').disabled = currentQ === 0;
+  document.getElementById('btn-next').disabled = answers[currentQ] === null;
+  document.getElementById('btn-next').textContent = 'Next →';
+}
+
+function renderCalibration() {
+  const card = document.getElementById('question-card');
+  card.innerHTML = `
+    <div class="scripture-ref">${CALIBRATION.ref}</div>
+    <h2 class="question">${CALIBRATION.q}</h2>
+    <p class="calibration-subtitle">${CALIBRATION.subtitle}</p>
+    <div class="options calibration-options">
+      ${CALIBRATION.statements.map((s, i) => `
+        <button class="option calibration-option ${calibrationSelections.includes(i) ? 'selected' : ''}" onclick="toggleCalibration(${i})">
+          ${s.text}
+        </button>
+      `).join('')}
+    </div>
+  `;
+
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = '';
+
+  const totalSteps = QUESTIONS.length + 1;
+  document.getElementById('q-current').textContent = totalSteps;
+  document.getElementById('q-percent').textContent = '100%';
+  document.getElementById('progress-fill').style.width = '100%';
+
+  document.getElementById('btn-back').disabled = false;
+  document.getElementById('btn-next').disabled = false; // always enabled — calibration is optional
+  document.getElementById('btn-next').textContent = 'See your result →';
+}
+
+function selectOption(i) {
+  answers[currentQ] = i;
+  document.querySelectorAll('.option').forEach((el, idx) => {
+    el.classList.toggle('selected', idx === i);
+  });
+  document.getElementById('btn-next').disabled = false;
+}
+
+function toggleCalibration(i) {
+  const idx = calibrationSelections.indexOf(i);
+  if (idx === -1) {
+    calibrationSelections.push(i);
+  } else {
+    calibrationSelections.splice(idx, 1);
+  }
+  // Update just the toggled element's class
+  const buttons = document.querySelectorAll('.calibration-option');
+  if (buttons[i]) buttons[i].classList.toggle('selected');
+}
+
+function nextQuestion() {
+  if (onCalibration) {
+    computeAndShowResult();
+    return;
+  }
+  if (answers[currentQ] === null) return;
+  if (currentQ < QUESTIONS.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    // Move to calibration step
+    onCalibration = true;
+    renderQuestion();
+  }
+}
+
+function prevQuestion() {
+  if (onCalibration) {
+    onCalibration = false;
+    renderQuestion();
+    return;
+  }
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
+}
+
+// ──────────────────────────────────────────────────────────────
+// SCORING
+// ──────────────────────────────────────────────────────────────
+function computeScores() {
+  const scores = {
+    nabi: 0, roeh: 0, chozeh: 0, tsaphah: 0,
+    shamar: 0, nataph: 0, massa: 0, ishHaElohim: 0
+  };
+
+  // Main question scoring
+  answers.forEach((ansIdx, qIdx) => {
+    if (ansIdx === null) return;
+    const weights = QUESTIONS[qIdx].options[ansIdx].weights;
+    for (const key in weights) {
+      scores[key] += weights[key];
+    }
+  });
+
+  // Calibration boost: each selected statement adds 2 points,
+  // split evenly across the types that statement represents.
+  // Capped at 6 selections to prevent over-weighting.
+  const cappedSelections = calibrationSelections.slice(0, 6);
+  cappedSelections.forEach(i => {
+    const stmt = CALIBRATION.statements[i];
+    const boost = 2 / stmt.types.length;
+    stmt.types.forEach(t => { scores[t] += boost; });
+  });
+
+  // Round to avoid fractional display
+  for (const k in scores) scores[k] = Math.round(scores[k] * 10) / 10;
+
+  return scores;
+}
+
+// Returns a hybrid archetype key if the top two scores are close AND
+// the pairing exists in HYBRIDS. Otherwise returns null.
+//
+// Threshold is 60% — calibrated to distinguish genuine hybrids from
+// single-type profiles that happen to score well on a related secondary.
+function detectHybrid(sortedScores) {
+  const [k1, s1] = sortedScores[0];
+  const [k2, s2] = sortedScores[1];
+
+  if (s1 === 0) return null;
+  const ratio = s2 / s1;
+  if (ratio < 0.58) return null;
+
+  // Alphabetise the pair key
+  const pairKey = [k1, k2].sort().join('+');
+  return HYBRIDS[pairKey] ? pairKey : null;
+}
+
+function computeAndShowResult() {
+  const scores = computeScores();
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const hybridKey = detectHybrid(sorted);
+
+  if (hybridKey) {
+    renderHybridResult(hybridKey, sorted, scores);
+  } else {
+    const [primaryKey] = sorted[0];
+    const [secondaryKey] = sorted[1];
+    renderResult(primaryKey, secondaryKey, scores);
+  }
+  showScreen('screen-result');
+}
+
+// ──────────────────────────────────────────────────────────────
+// RESULT RENDERING — SINGLE TYPE
+// ──────────────────────────────────────────────────────────────
+function renderResult(primaryKey, secondaryKey, scores) {
+  const primary = TYPES[primaryKey];
+  const secondary = TYPES[secondaryKey];
+
+  // Reset result label for single-type result
+  document.querySelector('.result-label').innerHTML = 'Your primary function';
+  // Reset the section heading in case a previous hybrid render mutated it
+  document.querySelector('#section-secondary .section-heading').innerHTML = 'Your secondary stream';
+
+  document.getElementById('r-hebrew').textContent = primary.hebrew;
+  document.getElementById('r-translit').textContent = primary.translit;
+  document.getElementById('r-role').textContent = primary.role;
+
+  document.getElementById('r-calling').innerHTML = primary.calling;
+
+  document.getElementById('r-scripture').innerHTML = primary.scriptures.map(s => `
+    <div class="scripture-card">
+      <div class="verse">"${s.verse}"</div>
+      <div class="ref">${s.ref}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('r-traits').innerHTML = primary.traits.map(t =>
+    `<div class="trait">${t}</div>`
+  ).join('');
+
+  document.getElementById('r-examples').innerHTML = primary.examples;
+
+  // Show the secondary stream card
+  document.getElementById('section-secondary').style.display = '';
+  document.getElementById('r-secondary-intro').textContent =
+    'Most prophetic people carry a primary function and a secondary one they move in and out of. Yours is clear but not a full hybrid — here is the stream you most often flow into.';
+  document.getElementById('r-secondary').innerHTML = `
+    <div class="sec-label">You also carry</div>
+    <div class="sec-name">${secondary.translit} <em>${secondary.hebrew}</em></div>
+    <p>${secondary.role} · ${primary.secondaryBlend.replace(/primary/g, primary.translit)}</p>
+    <p style="margin-top: 14px; font-size: 0.92rem;">${stripHtml(secondary.calling).substring(0, 240)}...</p>
+  `;
+
+  renderBreakdown(scores);
+
+  document.getElementById('r-stewardship').innerHTML = primary.stewardship;
+}
+
+// ──────────────────────────────────────────────────────────────
+// RESULT RENDERING — HYBRID ARCHETYPE
+// ──────────────────────────────────────────────────────────────
+function renderHybridResult(hybridKey, sortedScores, scores) {
+  const hybrid = HYBRIDS[hybridKey];
+  const [k1, k2] = hybridKey.split('+');
+  const type1 = TYPES[k1];
+  const type2 = TYPES[k2];
+
+  // Update label to indicate hybrid
+  document.querySelector('.result-label').innerHTML = 'Your prophetic signature · A biblical hybrid';
+
+  document.getElementById('r-hebrew').textContent = hybrid.hebrew;
+  document.getElementById('r-translit').textContent = hybrid.translit;
+  document.getElementById('r-role').textContent = hybrid.name;
+
+  // Calling section uses the hybrid calling
+  document.getElementById('r-calling').innerHTML = hybrid.calling +
+    `<p style="margin-top: 20px; padding: 18px 22px; background: var(--black-card); border-left: 2px solid var(--gold); font-family: var(--serif); font-style: italic; color: var(--white);">Scriptural faces: <strong style="color: var(--gold); font-weight: 600;">${hybrid.face}</strong></p>`;
+
+  // Scripture section combines hybrid key scripture with one from each type
+  document.getElementById('r-scripture').innerHTML = `
+    <div class="scripture-card">
+      <div class="verse">"${hybrid.keyScripture.verse}"</div>
+      <div class="ref">${hybrid.keyScripture.ref}</div>
+    </div>
+    <div class="scripture-card">
+      <div class="verse">"${type1.scriptures[0].verse}"</div>
+      <div class="ref">${type1.scriptures[0].ref} · ${type1.translit}</div>
+    </div>
+    <div class="scripture-card">
+      <div class="verse">"${type2.scriptures[0].verse}"</div>
+      <div class="ref">${type2.scriptures[0].ref} · ${type2.translit}</div>
+    </div>
+  `;
+
+  // Traits: show a merged list of key traits from both (top 3 from each)
+  const mergedTraits = [
+    ...type1.traits.slice(0, 3),
+    ...type2.traits.slice(0, 3)
+  ];
+  document.getElementById('r-traits').innerHTML = mergedTraits.map(t =>
+    `<div class="trait">${t}</div>`
+  ).join('');
+
+  document.getElementById('r-examples').innerHTML =
+    `<strong style="color: var(--white);">${hybrid.face}</strong> are the clearest biblical expressions of this pairing. ` +
+    `The ${type1.translit} functions as ${type1.role.toLowerCase()}. The ${type2.translit} functions as ${type2.role.toLowerCase()}. When these two graces rest on one person, you get the pattern you are operating in.`;
+
+  // For a hybrid, replace the "secondary stream" section with a "signature" section
+  document.getElementById('section-secondary').style.display = '';
+  document.querySelector('#section-secondary .section-heading').innerHTML = 'Your prophetic signature';
+  document.getElementById('r-secondary-intro').textContent =
+    'You are not a single-type prophet with a minor secondary — you are a recognised biblical hybrid. This is how that shows up in your life.';
+  document.getElementById('r-secondary').innerHTML = `
+    <div class="sec-label">The ${hybrid.name}</div>
+    <div class="sec-name">${hybrid.translit} <em>${hybrid.hebrew}</em></div>
+    <p style="margin-top: 12px;">${hybrid.signature}</p>
+  `;
+
+  renderBreakdown(scores);
+
+  // Stewardship uses the hybrid warning (keeps the section consistent)
+  document.getElementById('r-stewardship').innerHTML =
+    `<p>${hybrid.warning}</p>` +
+    `<p style="margin-top: 16px;"><strong style="color: var(--white);">From your ${type1.translit} grace:</strong> ${stripHtml(type1.stewardship).split('.')[0]}.</p>` +
+    `<p><strong style="color: var(--white);">From your ${type2.translit} grace:</strong> ${stripHtml(type2.stewardship).split('.')[0]}.</p>`;
+}
+
+// ──────────────────────────────────────────────────────────────
+// SHARED: score breakdown bar chart
+// ──────────────────────────────────────────────────────────────
+function renderBreakdown(scores) {
+  const maxScore = Math.max(...Object.values(scores));
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  document.getElementById('r-breakdown').innerHTML = sorted.map(([key, score], idx) => {
+    const pct = maxScore > 0 ? (score / maxScore) * 100 : 0;
+    return `
+      <div class="score-row ${idx === 0 ? 'top' : ''} ${idx === 1 ? 'second' : ''}">
+        <div class="label">${TYPES[key].translit}</div>
+        <div class="bar"><div class="bar-fill" style="width: ${pct}%"></div></div>
+        <div class="num">${score}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function stripHtml(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+}
+
+// ──────────────────────────────────────────────────────────────
+// UTILITIES
+// ──────────────────────────────────────────────────────────────
+function restart() {
+  showScreen('screen-intro');
+  currentQ = 0;
+  answers = new Array(QUESTIONS.length).fill(null);
+  calibrationSelections = [];
+  onCalibration = false;
+}
+
+function shareResult(btn) {
+  const hebrew = document.getElementById('r-hebrew').textContent;
+  const translit = document.getElementById('r-translit').textContent;
+  const role = document.getElementById('r-role').textContent;
+  const isHybrid = document.querySelector('.result-label').textContent.includes('hybrid');
+
+  const text = isHybrid
+    ? `I took the Prophetic Diagnostic and my signature is ${translit} — ${role} — a biblical prophetic hybrid.`
+    : `I took the Prophetic Diagnostic and my primary function is ${translit} (${hebrew}) — ${role}.`;
+
+  // Try native share first (mobile, HTTPS only)
+  if (navigator.share && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+    navigator.share({ title: 'What type of prophet are you?', text })
+      .then(() => showShareFeedback(btn, 'Shared ✓'))
+      .catch((err) => {
+        // User cancelled — don't show an error
+        if (err && err.name === 'AbortError') return;
+        // Real failure — fall through to clipboard
+        copyToClipboard(text, btn);
+      });
+    return;
+  }
+
+  // Desktop or older browsers: copy to clipboard
+  copyToClipboard(text, btn);
+}
+
+function copyToClipboard(text, btn) {
+  // Modern clipboard API (requires HTTPS or localhost)
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text)
+      .then(() => showShareFeedback(btn, 'Copied to clipboard ✓'))
+      .catch(() => legacyCopy(text, btn));
+    return;
+  }
+  // Legacy fallback — works everywhere, including file:// and HTTP
+  legacyCopy(text, btn);
+}
+
+function legacyCopy(text, btn) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  textarea.style.left = '-9999px';
+  textarea.style.top = '0';
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  let success = false;
+  try {
+    success = document.execCommand('copy');
+  } catch (e) {
+    success = false;
+  }
+  document.body.removeChild(textarea);
+  if (success) {
+    showShareFeedback(btn, 'Copied to clipboard ✓');
+  } else {
+    // Absolute last resort — show the text in a prompt so user can copy manually
+    showShareFeedback(btn, 'Tap text to copy', text);
+  }
+}
+
+function showShareFeedback(btn, message, fallbackText) {
+  if (!btn) {
+    // Button reference missing — just show a toast
+    showToast(message);
+    return;
+  }
+  const originalText = btn.textContent;
+  btn.textContent = message;
+  btn.classList.add('sharing');
+  btn.style.pointerEvents = 'none';
+  setTimeout(() => {
+    btn.textContent = originalText;
+    btn.classList.remove('sharing');
+    btn.style.pointerEvents = '';
+  }, 2400);
+
+  // If we have fallback text (copy failed completely), show a toast with the text
+  if (fallbackText) {
+    showToast(fallbackText, 6000);
+  }
+}
+
+function showToast(message, duration) {
+  duration = duration || 2400;
+  // Remove any existing toast
+  const existing = document.querySelector('.share-toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.className = 'share-toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  // Trigger entry animation
+  requestAnimationFrame(() => toast.classList.add('visible'));
+
+  setTimeout(() => {
+    toast.classList.remove('visible');
+    setTimeout(() => toast.remove(), 400);
+  }, duration);
+}
+</script>
+
+</body>
+</html>
